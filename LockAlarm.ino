@@ -1,48 +1,37 @@
-//#define SERIAL_ON
-
-int pinSwitch = 6;
 int pinAlarm = 2;
+int pinLED = 9;
 
-#define ALARM_START 20000L
-#define ALARM_END 50000L
-long timeStart;
+#define ALARM_START 20
+#define ALARM_LEN 20
+
+int ringAlarm = 1;
 
 void setup() {
-#ifdef SERIAL_ON
-  Serial.begin(9600);
-#endif
-
-  pinMode(pinSwitch, INPUT);
-
   pinMode(pinAlarm, OUTPUT);
   digitalWrite(pinAlarm, LOW);
 
-  timeStart = millis();
+  pinMode(pinLED, OUTPUT);
+  digitalWrite(pinLED, LOW);
+}
+
+void blink(int times) {
+  for (int i = 0; i < times; i++) {
+    delay(900);
+    digitalWrite(pinLED, HIGH);
+    delay(100);
+    digitalWrite(pinLED, LOW);
+  }
 }
 
 void loop() {
-  long timeNow = millis();
+  blink(ALARM_START);
 
-  int stateSwitch = digitalRead(pinSwitch);
-  if (stateSwitch == 0) {
-    timeStart = timeNow;
+  if (ringAlarm) {
+    digitalWrite(pinAlarm, HIGH);
   }
-  long timeElapsed = timeNow - timeStart;
 
-#ifdef SERIAL_ON
-  Serial.print("Switch: ");
-  Serial.print(stateSwitch);
-  Serial.print(",\tTime Start: ");
-  Serial.print(timeStart);
-  Serial.print(",\tTime Now: ");
-  Serial.print(timeNow);
-  Serial.print(",\tTime Elapsed: ");
-  Serial.print(timeElapsed);
-  Serial.println();
-#endif
+  blink(ALARM_LEN);
+  digitalWrite(pinAlarm, LOW);
 
-  int alarmOn = (ALARM_START < timeElapsed) && (timeElapsed < ALARM_END);
-  digitalWrite(pinAlarm, alarmOn ? HIGH : LOW);
-
-  delay(100);
+  ringAlarm = 0;
 }
