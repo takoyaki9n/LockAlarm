@@ -1,10 +1,10 @@
-int pinAlarm = 2;
+int pinAlarm = 10;
 int pinLED = 9;
 
 #define ALARM_START 20
-#define ALARM_LEN 20
+#define ALARM_END 40
 
-int ringAlarm = 1;
+int count;
 
 void setup() {
   pinMode(pinAlarm, OUTPUT);
@@ -12,26 +12,18 @@ void setup() {
 
   pinMode(pinLED, OUTPUT);
   digitalWrite(pinLED, LOW);
-}
 
-void blink(int times) {
-  for (int i = 0; i < times; i++) {
-    delay(900);
-    digitalWrite(pinLED, HIGH);
-    delay(100);
-    digitalWrite(pinLED, LOW);
-  }
+  count = 0;
 }
 
 void loop() {
-  blink(ALARM_START);
+  int ringAlarm = ALARM_START <= count && count < ALARM_END;
+  digitalWrite(pinAlarm, ringAlarm ? HIGH : LOW);
 
-  if (ringAlarm) {
-    digitalWrite(pinAlarm, HIGH);
-  }
+  digitalWrite(pinLED, HIGH);
+  delay(100);
+  digitalWrite(pinLED, LOW);
+  delay(900);
 
-  blink(ALARM_LEN);
-  digitalWrite(pinAlarm, LOW);
-
-  ringAlarm = 0;
+  count++;
 }
