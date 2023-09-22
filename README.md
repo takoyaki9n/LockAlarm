@@ -1,5 +1,5 @@
 # Lock Alarm
-An alarm that starts when you keep the door unlocked longer than 20 seconds (stops after another 20 seconds).
+An alarm that starts when you keep the door unlocked longer than 60 seconds (stops after another 60 seconds).
 
 ## How to use
 1. Attach a neodymium magnet to the thumbturn lock of the door.
@@ -11,12 +11,12 @@ An alarm that starts when you keep the door unlocked longer than 20 seconds (sto
 
 | Ref | Description |
 | --- | ---- |
-| B1  | Pro Micro |
+| U1  | ATtiny13A-P |
 | SW1 | Reed Switch |
-| BT1 | Battery (5V) |
+| BT1 | Battery (3V) |
 | BZ1 | Buzzer |
 | D1 | LED |
-| R1 | Register (1kΩ) |
+| R1 | Register (300Ω) |
 | | Neodymium magnet |
 
 ![shematic](./LockAlarm.svg)

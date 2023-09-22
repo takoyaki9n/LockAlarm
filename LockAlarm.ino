@@ -1,8 +1,9 @@
-int pinAlarm = 10;
-int pinLED = 9;
+const uint8_t alarmStart  = 60;
+const uint8_t alarmDuration = 60;
+const uint8_t alarmEnd = alarmStart + alarmDuration;
 
-#define ALARM_START 20
-#define ALARM_END 40
+const uint8_t pinAlarm = 0;
+const uint8_t pinLED = 1;
 
 int count;
 
@@ -17,7 +18,7 @@ void setup() {
 }
 
 void loop() {
-  int ringAlarm = ALARM_START <= count && count < ALARM_END;
+  int ringAlarm = alarmStart <= count && count < alarmEnd;
   digitalWrite(pinAlarm, ringAlarm ? HIGH : LOW);
 
   digitalWrite(pinLED, HIGH);
