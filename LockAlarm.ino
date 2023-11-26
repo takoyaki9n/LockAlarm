@@ -1,11 +1,10 @@
 const uint8_t alarmStart  = 60;
-const uint8_t alarmDuration = 60;
-const uint8_t alarmEnd = alarmStart + alarmDuration;
+const uint8_t alarmEnd = 120;
 
 const uint8_t pinAlarm = 0;
 const uint8_t pinLED = 1;
 
-int count;
+uint16_t count;
 
 void setup() {
   pinMode(pinAlarm, OUTPUT);
@@ -18,13 +17,13 @@ void setup() {
 }
 
 void loop() {
-  int ringAlarm = alarmStart <= count && count < alarmEnd;
+  bool ringAlarm = (alarmStart <= count) && (count < alarmEnd);
   digitalWrite(pinAlarm, ringAlarm ? HIGH : LOW);
 
-  digitalWrite(pinLED, HIGH);
-  delay(100);
-  digitalWrite(pinLED, LOW);
-  delay(900);
+  bool ledOn = !ringAlarm && (count & 1);
+  digitalWrite(pinLED, ledOn ? HIGH : LOW);
+  
+  delay(1000);
 
   count++;
 }
