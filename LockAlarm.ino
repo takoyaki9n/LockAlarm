@@ -20,7 +20,7 @@ void loop() {
   bool ringAlarm = (alarmStart <= count) && (count < alarmEnd);
   digitalWrite(pinAlarm, ringAlarm ? HIGH : LOW);
 
-  bool ledOn = !ringAlarm && (count & 1);
+  bool ledOn = !ringAlarm && !(count & 1);
   digitalWrite(pinLED, ledOn ? HIGH : LOW);
   
   delay(1000);
